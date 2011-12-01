@@ -242,7 +242,7 @@ dl { margin: 0 0 1.25em 0; }
   <li> <a href="index.php">harness</a>
   <li> <a href="#about">about</a>
   <li> <a href="http://code.google.com/p/loadtimer/">code</a>
-  <li> <a href="groups.google.com/group/loadtimer/topics">contact</a>
+  <li> <a href="http://groups.google.com/group/loadtimer/topics">contact</a>
 </ul>
 </span>
 <h1 style="color: #353335; font-size: 2.5em;">
