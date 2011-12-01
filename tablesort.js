@@ -144,6 +144,7 @@ TS.makeTsdiv = function() {
 	var tsdiv = document.createElement('div');
 	tsdiv.style.position = "absolute";
 	tsdiv.style.backgroundColor = "white";
+	tsdiv.style.fontFamily = "Arial";
 	tsdiv.style.fontSize = "10pt";
 	tsdiv.style.lineHeight = "10px";
 	return tsdiv;
