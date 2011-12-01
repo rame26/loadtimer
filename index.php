@@ -91,7 +91,7 @@ dl { margin: 0 0 1.25em 0; }
   <li> <a href="results.php">results</a>
   <li> <a href="#about">about</a>
   <li> <a href="http://code.google.com/p/loadtimer/">code</a>
-  <li> <a href="groups.google.com/group/loadtimer/topics">contact</a>
+  <li> <a href="http://groups.google.com/group/loadtimer/topics">contact</a>
 </ul>
 </span>
 <h1 style="color: #353335; font-size: 2.5em;">
@@ -180,7 +180,7 @@ Other sites will break out of the iframe (e.g., <a href="http://www.nytimes.com/
         <li> The order of the preset URLs is randomized so that any interdependencies are mitigated (e.g., URL 1 loads resources used by URL 2).
         <li> In some browsers a website's favicon is not downloaded when the website is loaded in an iframe. This could affect page load times, but is likely negligible.
       </ul>
-  <li> If you choose to 
+  <li> There's a simple check to help remind you to clear the cache between runs.
 </ul>
 
 
