@@ -37,7 +37,9 @@ function getLink() {
 function doSimpleCommand($query) {
 	$link = getLink();
 	if ( $link ) {
-		return mysql_query($query, $link);
+		$result = mysql_query($query, $link);
+		mysql_free_result($result);
+		return true;
 	}
 
 	return NULL;
@@ -47,9 +49,7 @@ function doSimpleCommand($query) {
 function doQuery($query) {
 	$link = getLink();
 	if ( $link ) {
-		$result = mysql_query($query, $link);
-		mysql_free_result($result);
-		return true;
+		return mysql_query($query, $link);
 	}
 
 	return NULL;
