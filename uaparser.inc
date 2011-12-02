@@ -128,11 +128,13 @@ function parseUserAgent($useragent, &$browser=NULL, &$v1=NULL, &$v2=NULL, &$v3=N
 	}
 	else if ( ereg("Android ([0-9]+)\.([0-9]+).*SGH-T849", $useragent, $regs) ) {
 		$browser = "Galaxy 7.0";
-		$v1 = "SGH-T849";
+		$v1 = "7";
+		$v2 = "0";
 	}
 	else if ( ereg("Android ([0-9]+)\.([0-9]+).*GT-P7510", $useragent, $regs) ) {
 		$browser = "Galaxy 10.1";
-		$v1 = "GT-P7510";
+		$v1 = "10";
+		$v2 = "1";
 	}
 	// END SPECIAL CASES THAT MUST GO BEFORE THE MAIN PARSING
 
@@ -245,7 +247,7 @@ function parseUserAgent($useragent, &$browser=NULL, &$v1=NULL, &$v2=NULL, &$v3=N
 		$v1 = $regs[1];
 		$v2 = $regs[2];
 	}
-	else if ( ereg("iPad.*CPU OS ([0-9]+)_([0-9]+)_([0-9]+).*Mobile/(.*) Safari", $useragent, $regs) ) {
+	else if ( ereg("iPad.*CPU OS ([0-9]+)_([0-9]+)_([0-9]+).*Mobile/([0-9]*)", $useragent, $regs) ) {
 		$browser = "iPad " . ( "9A405" === $regs[4] ? "1" : "2" );
 		$v1 = $regs[1];
 		$v2 = $regs[2];
@@ -257,7 +259,7 @@ function parseUserAgent($useragent, &$browser=NULL, &$v1=NULL, &$v2=NULL, &$v3=N
 		$v2 = $regs[2];
 		$v3 = $regs[3];
 	}
-	else if ( ereg("iPad.*CPU OS ([0-9]+)_([0-9]+).*Mobile/(.*) Safari", $useragent, $regs) ) {
+	else if ( ereg("iPad.*CPU OS ([0-9]+)_([0-9]+).*Mobile/([0-9]*)", $useragent, $regs) ) {
 		$browser = "iPad " . ( "9A405" === $regs[4] ? "1" : "2" );
 		$v1 = $regs[1];
 		$v2 = $regs[2];
