@@ -272,10 +272,8 @@ function doFrameLoad(bError) {
 		}
 		else {
 			gbStarted = false;
-			var img = new Image();
-			img.src = document.getElementById("beaconurl").value + "?action=done&id=" + gId;
-            toggleStart();
-			alert("Done");
+			// display alert dialog async so we don't block other onload behavior in the iframe's document
+			setTimeout("toggleStart(); alert('Done');", 10);
 		}
 	}
 }
