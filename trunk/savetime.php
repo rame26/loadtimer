@@ -34,7 +34,7 @@ if ( array_key_exists("action", $_GET) && "done" === $_GET["action"] ) {
 // only for my testing 
 // $gLFID = ( array_key_exists("REMOTE_ADDR", $_SERVER) ? crypt($_SERVER["REMOTE_ADDR"], "DC") : "" );
 $gLFID = "public";
-$gUrl = ( array_key_exists("url", $_GET) ? $_GET["url"] : "" );
+$gUrl = trim( array_key_exists("url", $_GET) ? $_GET["url"] : "" );
 $gTime = ( array_key_exists("loadtime", $_GET) ? $_GET["loadtime"] : 0 );
 $gId = ( array_key_exists("id", $_GET) ? $_GET["id"] : 0 );
 $gUA = $_SERVER['HTTP_USER_AGENT'];
@@ -45,7 +45,6 @@ $gBrowser = "$gBrowserName $gV1";
 if ( !$gUrl || !$gTime || !$gId || !$gBrowser ) {
 	exit(1);
 }
-
 
 // save the results
 $now = time();
