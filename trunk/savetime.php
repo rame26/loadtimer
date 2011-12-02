@@ -38,7 +38,9 @@ $gUrl = ( array_key_exists("url", $_GET) ? $_GET["url"] : "" );
 $gTime = ( array_key_exists("loadtime", $_GET) ? $_GET["loadtime"] : 0 );
 $gId = ( array_key_exists("id", $_GET) ? $_GET["id"] : 0 );
 $gUA = $_SERVER['HTTP_USER_AGENT'];
-$gBrowser = parseUserAgent($gUA);
+$gBrowserName = $gV1 = "";
+parseUserAgent($gUA, $gBrowserName, $gV1);
+$gBrowser = "$gBrowserName $gV1";
 
 if ( !$gUrl || !$gTime || !$gId || !$gBrowser ) {
 	exit(1);
