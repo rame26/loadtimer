@@ -202,8 +202,9 @@ function testCache() {
     t_cacheStart = Number(new Date());
     var elem = document.createElement("script");
     elem.type = "text/javascript";
+    elem.onload = function() { elem.onreadystatechange = null; testCacheOnload(); };
+	elem.onreadystatechange = function() { if ( elem.readyState && ("complete" == elem.readyState || "loaded" == elem.readyState) ) { elem.onload = null; testCacheOnload(); } };
     elem.src = "cachetest.php";
-    elem.onload = testCacheOnload;
     document.getElementsByTagName("head")[0].appendChild(elem);
 }
 
