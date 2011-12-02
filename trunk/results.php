@@ -113,8 +113,7 @@ $aUrls = array_keys($ghUrls);
 foreach($aUrls as $url) {
 	$sTH .= "<th class=sortnum><a href='$url' target='_blank'>" . $ghUrls[$url] . "</a></th> ";
 }
-$sTH .= "<th class=sortnum>&#35; data</th>" .  
-	"</tr>\n";
+$sTH .= "<th class=sortnum>&#35; data</th>" . "</tr>\n";
 
 
 // track min & max (initialize values for each URL)
@@ -153,7 +152,7 @@ $sRows = "";
 $iBrowser = 0;
 foreach($gaBrowsers as $browser) {
 	$iBrowser++;
-	$sRows .= "<tr> <td class=browser><input type=checkbox name='b_$iBrowser' value='$browser' checked> $browser</td> ";
+	$sRow = "<tr> <td class=browser><input type=checkbox name='b_$iBrowser' value='$browser' checked> $browser</td> ";
 	foreach($aUrls as $url) {
 		$median = $ghMedians[$browser][$url];
 		$class = "sortnum";
@@ -169,12 +168,20 @@ foreach($gaBrowsers as $browser) {
 		else {
 			$class .= " num";
 		}
-		$sRows .= "<td class='$class" . ( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? " exc" : "" ) . "'>" . commaize($median) . "<br>(" .
-			( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? $ghExceptions[$browser][$url] : $ghResources[$url] ) . ")</td> ";
+		$data = "";
+		if ( $median ) {
+			$data = commaize($median) . "<br>(" .
+				( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? 
+				  $ghExceptions[$browser][$url] : $ghResources[$url] ) . ")";
+		}
+		$sRow .= "<td class='$class" . ( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? " exc" : "" ) . "'>" . 
+			$data . "</td> ";
 	}
 	$num = $ghMedians[$browser]['num'];
-	$sRows .= "<td class='sortnum'>$num</td> " .
-		"</tr>\n";
+	$sRow .= "<td class='sortnum'>$num</td> " . "</tr>\n";
+	if ( $num ) {
+		$sRows .= $sRow;
+	}
 }
 
 // add commas to a big number
