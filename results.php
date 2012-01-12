@@ -55,19 +55,43 @@ $ghExceptions["Galaxy 7.0 SGH-T849"]["http://www.ebay.com/"] = 22;
 $ghExceptions["Galaxy 7.0 SGH-T849"]["http://www.linkedin.com/"] = 2;
 $ghExceptions["Galaxy 7.0 SGH-T849"]["http://www.bing.com/search?q=flowers"] = 7;
 $ghExceptions["Galaxy 7.0 SGH-T849"]["http://www.cnn.com/"] = 20;
+$ghExceptions["Galaxy 7"] = array();
+$ghExceptions["Galaxy 7"]["http://www.amazon.com/"] = 19;
+$ghExceptions["Galaxy 7"]["http://en.wikipedia.org/wiki/Flowers"] = 32;
+$ghExceptions["Galaxy 7"]["http://www.ebay.com/"] = 22;
+$ghExceptions["Galaxy 7"]["http://www.linkedin.com/"] = 2;
+$ghExceptions["Galaxy 7"]["http://www.bing.com/search?q=flowers"] = 7;
+$ghExceptions["Galaxy 7"]["http://www.cnn.com/"] = 20;
+
 $ghExceptions["Galaxy 10.1 GT-P7510"] = array();
 $ghExceptions["Galaxy 10.1 GT-P7510"]["http://www.linkedin.com/"] = 2;
 $ghExceptions["Galaxy 10.1 GT-P7510"]["http://www.yahoo.com/"] = 46;
+$ghExceptions["Galaxy 10"] = array();
+$ghExceptions["Galaxy 10"]["http://www.linkedin.com/"] = 2;
+$ghExceptions["Galaxy 10"]["http://www.yahoo.com/"] = 46;
+
 $ghExceptions["Silk (accel off) 1.1.0"] = array();
 $ghExceptions["Silk (accel off) 1.1.0"]["http://www.yahoo.com/"] = 58;
 $ghExceptions["Silk (accel off) 1.1.0"]["http://www.ebay.com/"] = 18;
 $ghExceptions["Silk (accel on) 1.1.0"] = array();
 $ghExceptions["Silk (accel on) 1.1.0"]["http://www.yahoo.com/"] = 58;
 $ghExceptions["Silk (accel on) 1.1.0"]["http://www.ebay.com/"] = 18;
+$ghExceptions["Silk (accel off) 1"] = array();
+$ghExceptions["Silk (accel off) 1"]["http://www.yahoo.com/"] = 58;
+$ghExceptions["Silk (accel off) 1"]["http://www.ebay.com/"] = 18;
+$ghExceptions["Silk (accel on) 1"] = array();
+$ghExceptions["Silk (accel on) 1"]["http://www.yahoo.com/"] = 58;
+$ghExceptions["Silk (accel on) 1"]["http://www.ebay.com/"] = 18;
+
 $ghExceptions["iPad 2 5.0"] = array();
 $ghExceptions["iPad 2 5.0"]["http://www.yahoo.com/"] = 23;
+$ghExceptions["iPad 2 5"] = array();
+$ghExceptions["iPad 2 5"]["http://www.yahoo.com/"] = 23;
+
 $ghExceptions["iPad 1 5.0.1"] = array();
 $ghExceptions["iPad 1 5.0.1"]["http://www.yahoo.com/"] = 60;
+$ghExceptions["iPad 1 5"] = array();
+$ghExceptions["iPad 1 5"]["http://www.yahoo.com/"] = 60;
 
 $ghResources = array();
 $ghResources["http://www.yahoo.com/"] = 67;
@@ -174,8 +198,8 @@ foreach($gaBrowsers as $browser) {
 				( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? 
 				  $ghExceptions[$browser][$url] : $ghResources[$url] ) . ")";
 		}
-		$sRow .= "<td class='$class" . ( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? " exc" : "" ) . "'>" . 
-			$data . "</td> ";
+		$sRow .= "<td class='$class" . ( array_key_exists($browser, $ghExceptions) && array_key_exists($url, $ghExceptions[$browser]) ? " exc" : "" ) . 
+			"'>" . "$data</td> ";
 	}
 	$num = $ghMedians[$browser]['num'];
 	$sRow .= "<td class='sortnum'>$num</td> " . "</tr>\n";
