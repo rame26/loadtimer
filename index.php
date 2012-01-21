@@ -20,23 +20,37 @@ See the source code here:
 
 
 $gaUrls = array(
-				  // no load "http://www.google.com/search?q=flowers",
-				  // no load "http://www.facebook.com/",
-				  "http://www.yahoo.com/",
-				  // no load "http://www.youtube.com/",
-				  "http://www.amazon.com/",
-				  "http://en.wikipedia.org/wiki/Flowers",
-				  // no load "http://www.twitter.com/",
-				  "http://www.craigslist.com/",
-				  "http://www.ebay.com/",
-				  "http://www.linkedin.com/",
-				  "http://www.bing.com/search?q=flowers",
-				  "http://www.msn.com/",
-				  // framebuster "http://www.nytimes.com/",
-				  "http://www.engadget.com/",
-				  "http://www.cnn.com/",
-				  "http://www.reddit.com/"
-				  );
+				// no load "http://www.google.com/search?q=flowers",
+				// no load "http://www.facebook.com/",
+				// doesn't work in new Silk 1/20/12 "http://www.yahoo.com/",
+				// no load "http://www.youtube.com/",
+				"http://www.amazon.com/",
+				"http://en.wikipedia.org/wiki/Flowers",
+				// no load "http://www.twitter.com/",
+				"http://www.craigslist.com/",
+				"http://www.ebay.com/",
+				"http://www.linkedin.com/",
+				"http://www.bing.com/search?q=flowers",
+				"http://www.msn.com/",
+				// framebuster "http://www.nytimes.com/",
+				"http://www.engadget.com/",
+				"http://www.cnn.com/",
+				"http://www.reddit.com/",
+
+				// ranked 49,900-50,000 as of 1/20/2012
+				"http://www.backlinkfuel.com/",
+				"http://www.renesas.com/",
+				"http://www.bookmarkspad.com/",
+				"http://www.gobignetwork.com/",
+				"http://www.money.co.uk/",
+				// #11 "http://www.choosewhat.com/",
+				// #11 "http://www.autocompletepro.com/",
+				"http://www.car.org/",
+				"http://www.venturehacks.com/",
+				"http://www.maidenform.com/",
+				"http://www.sleepnumber.com/",
+				"http://www.mass.edu/"
+				);
 ?>
 <!doctype html>
 <html>
