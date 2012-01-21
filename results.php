@@ -22,9 +22,15 @@ require_once("db.inc");
 
 $gData = "blog";
 $gRange = "createdate >= 1322599749 and createdate <= 1322606100";
-if ( array_key_exists("data", $_GET) && "all" === $_GET["data"] ) {
-	$gData = "all";
-	$gRange = "createdate > 0";
+if ( array_key_exists("data", $_GET) ) {
+	if ( "all" === $_GET["data"] ) {
+		$gData = "all";
+		$gRange = "createdate > 0";
+	}
+	if ( "silkupdate" === $_GET["data"] ) {
+		$gData = "silkupdate";
+		$gRange = "createdate >= 1327107439 and createdate <= 1327111855";
+	}
 }
 
 
@@ -46,6 +52,27 @@ $ghUrls = array(
 				"http://www.cnn.com/" => "CNN",
 				"http://www.reddit.com/" => "Reddit"
 				);
+
+// "SU" == "Silk Update"
+$ghUrlsSU = array( 
+				"http://www.backlinkfuel.com/" => "Backlink Fuel",
+				"http://www.renesas.com/" => "Renesas",
+				"http://www.bookmarkspad.com/" => "BookmarksPad",
+				"http://www.gobignetwork.com/" => "Go BIG Network",
+				"http://www.money.co.uk/" => "Money UK",
+				// #11 "http://www.choosewhat.com/" => "ChooseWhat",
+				// #11 "http://www.autocompletepro.com/" => "AutoCompletePro",
+				"http://www.car.org/" => "CA Realtors",
+				"http://www.venturehacks.com/" => "Venture Hacks",
+				"http://www.maidenform.com/" => "Maidenform",
+				"http://www.sleepnumber.com/" => "Sleep Number",
+				"http://www.mass.edu/" => "Mass.edu"
+				);
+
+if ( "silkupdate" === $gData ) {
+	unset($ghUrls["http://www.yahoo.com/"]);
+	$ghUrls = array_merge($ghUrls, $ghUrlsSU);
+}
 
 $ghExceptions = array();
 $ghExceptions["Galaxy 7.0 SGH-T849"] = array();
@@ -138,7 +165,6 @@ foreach($aUrls as $url) {
 	$sTH .= "<th class=sortnum><a href='$url' target='_blank'>" . $ghUrls[$url] . "</a></th> ";
 }
 $sTH .= "<th class=sortnum>&#35; data</th>" . "</tr>\n";
-
 
 // track min & max (initialize values for each URL)
 $ghMin = array();
@@ -316,12 +342,15 @@ echo $sTH;
 echo $sRows;
 ?>
 </table>
+
 <input type=submit name=comparesel value="Compare Selected">
 <input type=button value="Reset" onclick="document.location='results.php'">
 <div style="margin-top: 0.5em;">
-	<input type=radio name=data value="blog" onchange="document.location='results.php?data=blog'"<?php echo ( "blog" === $gData ? " checked" : "" ) ?>> blog post's data
+<input type=radio name=data value="blog" onchange="document.location='results.php?data=blog'"<?php echo ( "blog" === $gData ? " checked" : "" ) ?>> blog post's data
 <br>
-<input type=radio name=data value="all" onchange="document.location='results.php?data=all'"<?php echo ( "blog" === $gData ? "" : " checked" ) ?>> all data (including public)
+<input type=radio name=data value="silkupdate" onchange="document.location='results.php?data=silkupdate'"<?php echo ( "silkupdate" === $gData ? " checked" : "" ) ?>> Silk update data
+<br>
+<input type=radio name=data value="all" onchange="document.location='results.php?data=all'"<?php echo ( "all" === $gData ? " checked" : "" ) ?>> all data (including public)
 </div>
 </form>
 
