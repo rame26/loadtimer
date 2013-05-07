@@ -18,38 +18,26 @@ See the source code here:
      http://code.google.com/p/loadtimer/
 */
 
-
+$bLoop = array_key_exists("loop", $_GET);
 $gaUrls = array(
-				// no load "http://www.google.com/search?q=flowers",
-				// no load "http://www.facebook.com/",
-				// doesn't work in new Silk 1/20/12 "http://www.yahoo.com/",
-				// no load "http://www.youtube.com/",
-				"http://www.amazon.com/",
 				"http://en.wikipedia.org/wiki/Flowers",
-				// no load "http://www.twitter.com/",
-				"http://www.craigslist.com/",
-				"http://www.ebay.com/",
-				"http://www.linkedin.com/",
-				"http://www.bing.com/search?q=flowers",
-				"http://www.msn.com/",
-				// framebuster "http://www.nytimes.com/",
-				"http://www.engadget.com/",
+				"http://www.about.com/",
+				"http://www.amazon.com/",
+				"http://www.aol.com/",
+				"http://www.ask.com/",
+				"http://www.bing.com/search?q=news",
 				"http://www.cnn.com/",
-				"http://www.reddit.com/",
-
-				// ranked 49,900-50,000 as of 1/20/2012
-				"http://www.backlinkfuel.com/",
-				"http://www.renesas.com/",
-				"http://www.bookmarkspad.com/",
-				"http://www.gobignetwork.com/",
-				"http://www.money.co.uk/",
-				// #11 "http://www.choosewhat.com/",
-				// #11 "http://www.autocompletepro.com/",
-				"http://www.car.org/",
-				"http://www.venturehacks.com/",
-				"http://www.maidenform.com/",
-				"http://www.sleepnumber.com/",
-				"http://www.mass.edu/"
+				"http://www.craigslist.com/",
+				"http://www.dailymotion.com/",
+				"http://www.ebay.com/",
+				"http://www.engadget.com/",
+				//"http://www.flickr.com/",
+				"http://www.huffingtonpost.com/",
+				"http://www.imdb.com/",
+				"http://www.imgur.com/",
+				//"http://www.myspace.com/",
+				//"http://www.pinterest.com/",
+				"http://www.reddit.com/"
 				);
 ?>
 <!doctype html>
@@ -132,11 +120,25 @@ foreach ( $gaUrls as $url ) {
 </nobr>
 </td>
 <td>
-<div id=dprint style="font-family: monospace; font-size: 10pt; margin-left: 2em;">
+<div id=dprint style="font-family: monospace; font-size: 10pt; margin-left: 2em; max-height: 200px; overflow: auto;">
 </div>
 </td>
 </tr>
-	
+
+<?php
+if ( $bLoop ) {
+	echo <<<OUTPUT
+<tr>
+<td colspan=2>
+<div style="margin-top: 0.5em;">
+loop through the list of URLs <input type=text id=maxrepeat value=1 size=3 style="text-align: right;"> time(s)
+</div>
+</td>
+</tr>
+OUTPUT;
+}
+?>
+
 <tr>
 <td colspan=2>
 <div style="margin-top: 0.5em;">
@@ -160,6 +162,11 @@ beacon URL:
 </table>
 
 
+<script>
+// stub to avoid race conditions
+function doFrameLoad() {
+}
+</script>
 <iframe id=iframe1 src="about:blank" frameborder="1" style="margin-top: 3em; border: 1px solid;" width=98% height=500 onload="doFrameLoad()" onerror="doFrameLoad(true)"></iframe>
 
 <h2 id=about style="margin-top: 2em;">about</h2>
@@ -206,6 +213,10 @@ var t_start;
 var gbBeacon = true;
 var gbStarted = false;
 var giUrl = 0; // zero-based
+var giRepeat = 0; // zero-based
+var gMaxRepeat = 1;
+var gTimeout = 20; // number of seconds afterwhich to move on
+var gTimeoutID; // timer to kill
 var gaUrls;
 var gId;
 var t_cacheStart;
@@ -225,12 +236,16 @@ function testCache() {
 
 function testCacheOnload() {
     var delta = Number(new Date()) - t_cacheStart;
+	var bContinue = true;
     if ( delta < 3000 ) {
-        alert("It appears the cache wasn't cleared. Please clear the cache and try again.");
-		toggleStart();
+		bContinue = confirm("It appears the cache wasn't cleared. Do you want to continue anyway?");
+	}
+
+	if ( bContinue ) {
+        doLoadUrls();
     }
     else {
-        doLoadUrls();
+		toggleStart();
     }
 }
 
@@ -238,6 +253,8 @@ function testCacheOnload() {
 function doLoadUrls() {
 	gbStarted = true;
 	giUrl = 0;
+	giRepeat = 0;
+	gMaxRepeat = parseInt(document.getElementById('maxrepeat').value);
 	gId = Math.floor(Math.random() * 1000) + "_" + Number(new Date());
 	parseUrls();
 	clearDprint();
@@ -264,24 +281,40 @@ function doNextUrl() {
 		var iframe1 = document.getElementById('iframe1');
 		t_start = Number(new Date());
 		iframe1.src = url;
+		gTimeoutID = setTimeout(doBail, gTimeout*1000);
 	}
 }
 
 
-function doFrameLoad(bError) {
+function doBail() {
+	doFrameLoad(true, true);
+}
+
+
+function doFrameLoad(bError, bTimeout) {
 	var t_end = Number(new Date());
 	var loadtime = t_end - t_start;
+
+	if ( gTimeoutID ) {
+		clearTimeout(gTimeoutID); // clear the "bail" timer
+	}
+
 	var iframe1 = document.getElementById("iframe1");
 	if ( "about:blank" != iframe1.src ) {
 		var url = gaUrls[giUrl];
 		giUrl++;
 		dprint(giUrl + ": " + ( bError ? "error, " : loadtime + " ms, " ) + url);
-		if ( gbBeacon ) {
+		if ( gbBeacon && ! bError && ! bTimeout ) {
 			var img = new Image();
 			img.src = document.getElementById("beaconurl").value + "?url=" + escape(url) + "&loadtime=" + loadtime + "&id=" + gId;
 		}
 
 		if ( giUrl < gaUrls.length && "" != gaUrls[giUrl] ) {
+			setTimeout(doBlank, 2000);
+		}
+		else if ( (giUrl === gaUrls.length || (giUrl === gaUrls.length-1 && "" == gaUrls[giUrl])) && giRepeat < (gMaxRepeat-1) ) { // skip a blank URL at the end
+			giRepeat++;
+			giUrl = 0;
 			setTimeout(doBlank, 2000);
 		}
 		else {
