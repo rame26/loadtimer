@@ -1,0 +1,1 @@
+Loadtimer is a web-based test harness for measuring the load time of one or more URLs. There are many other ways to measure page load times (browser plugins, Navigation Timing, etc.) but those aren't currently available on most mobile devices. Loadtimer works on all web clients that support JavaScript.
